@@ -31,7 +31,8 @@ public class DataProducer {
 
         KinesisProducerConfiguration config = new KinesisProducerConfiguration();
         config.setRegion(awsProperties.getAwsRegion());
-        BasicAWSCredentials credentials = new BasicAWSCredentials(awsProperties.getAwsAccessKey(), awsProperties.getAwsSecretKey());
+        BasicAWSCredentials credentials = 
+            new BasicAWSCredentials(awsProperties.getAwsAccessKey(), awsProperties.getAwsSecretKey());
 
         config.setCredentialsProvider(new AWSStaticCredentialsProvider(credentials));
         config.setMaxConnections(1);
@@ -42,7 +43,9 @@ public class DataProducer {
     }
 
 
-    public void putIntoKinesis(String partitionKey, String payload) throws UnsupportedEncodingException, InterruptedException {
+    public void putIntoKinesis(String partitionKey, String payload) 
+        throws UnsupportedEncodingException, InterruptedException {
+        
         kinesisProducer = getKinesisProducer();
 
         ByteBuffer data = ByteBuffer.wrap(payload.getBytes("UTF-8"));
@@ -51,7 +54,8 @@ public class DataProducer {
             Thread.sleep(1);
         }
 
-        ListenableFuture<UserRecordResult> f = kinesisProducer.addUserRecord(awsProperties.getAwsStreamName(), partitionKey, data);
+        ListenableFuture<UserRecordResult> f = 
+            kinesisProducer.addUserRecord(awsProperties.getAwsStreamName(), partitionKey, data);
 
         Futures.addCallback(f, new FutureCallback<UserRecordResult>() {
             @Override
