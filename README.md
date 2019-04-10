@@ -10,7 +10,7 @@ Content Type: Application/json
 ```
 
 Sample Data
-```
+```json
 {
 "userId":  "user-1",
 "action":  "START",
